@@ -106,12 +106,11 @@ on both depth and number of references.
 
 Usage
 =====
-Usage: Optimize **COMMAND**
-       where **COMMAND** is one of:
-  **deadcode**   - Discover and report dead code within a BW project.
-  **ifToCopyOf** - Modify generated value-of within if constructs for optional-to-optional mappings to straight copy-of.
-  **namespaces** - Remove unused namespace declarations from processes.
-  **xpathRef**   - Report on the number and depth of XPath references for each activity in each process.\n
+Usage: Optimize **COMMAND** where **COMMAND** is one of:
+  - **deadcode**   - Discover and report dead code within a BW project.
+  - **ifToCopyOf** - Modify generated value-of within if constructs for optional-to-optional mappings to straight copy-of.
+  - **namespaces** - Remove unused namespace declarations from processes.
+  - **xpathRef**   - Report on the number and depth of XPath references for each activity in each process.\n
 
 Most commands print help when invoked w/o parameters
 
