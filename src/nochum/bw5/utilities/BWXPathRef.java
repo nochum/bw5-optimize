@@ -237,7 +237,7 @@ import org.xml.sax.SAXException;
 	private void addToMap(String key) {
     	if (refMap.containsKey(key)) {
     		Integer curValue = refMap.get(key);
-    		refMap.replace(key, curValue + 1);
+    		refMap.put(key, curValue + 1);
     	} else {
     		refMap.put(key, 1);
     	}		

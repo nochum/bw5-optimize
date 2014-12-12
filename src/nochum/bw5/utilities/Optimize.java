@@ -43,6 +43,8 @@ public class Optimize {
 				new BWNamespace(props);
 			else if (opType.equals("xpathRef"))
 				new BWXPathRef(props);
+			else if (opType.equals("instrument"))
+				new BWInstrument(props);
 			else
 				usage();
 		} catch (UsageException ue) {
@@ -66,7 +68,8 @@ public class Optimize {
 				"  deadcode   - Discover and report dead code within a BW project.\n" +
 				"  ifToCopyOf - Modify generated value-of within if constructs for optional-to-optional mappings to straight copy-of.\n" +
 				"  namespaces - Remove unused namespace declarations from processes.\n" +
-				"  xpathRef   - Report on the number and depth of XPath references for each activity in each process.\n\n" +
+				"  xpathRef   - Report on the number and depth of XPath references for each activity in each process.\n" +
+				"  instrument - Instrument a BACKUP COPY of a BW project for memory profiling.\n\n" +
 				"Most commands print help when invoked w/o parameters.\n";
 				
         System.err.print(usageString);
@@ -126,6 +129,21 @@ public class Optimize {
 				if ((i + 1) >= args.length)
 					usage();
 				props.put("projectRoot", args[i + 1]);
+				i += 2;
+			} else if (args[i].equals("-jar")) {
+				if ((i + 1) >= args.length)
+					usage();
+				props.put("jarFile", args[i + 1]);
+				i += 2;
+			} else if (args[i].equals("-memory")) {
+				if ((i + 1) >= args.length)
+					usage();
+				props.put("memoryThreshold", args[i + 1]);
+				i += 2;
+			} else if (args[i].equals("-slash")) {
+				if ((i + 1) >= args.length)
+					usage();
+				props.put("slashStyle", args[i + 1]);
 				i += 2;
 			} else {
 				System.err.println("Unrecognized parameter: " + args[i]);
