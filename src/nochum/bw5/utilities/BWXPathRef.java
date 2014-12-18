@@ -78,6 +78,8 @@ import org.xml.sax.SAXException;
 				"-output    <output location>    - Full path and file name for output report.\n" +
 				"-project   <project location>   - Full path to project on the filesystem.\n"
 				;
+		
+		_props = props;
 
 		if (!_props.containsKey("projectRoot")) {
 			throw(new UsageException("Required input parameter '-project' has not been specified.", usageString));
