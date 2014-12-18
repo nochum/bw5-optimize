@@ -56,7 +56,7 @@ class BWInstrument {
 	/**
 	 * directory where hprof files will be placed
 	 */
-	private String memoryThreshold    = null;
+	private String jmapLoc    = null;
 	
 	/**
 	 * directory where hprof files will be placed
@@ -82,7 +82,7 @@ class BWInstrument {
 				"-project   <project location>   - Full path to project on the filesystem.\n" +
 				"-output    <output location>    - Directory where heap dump files will be placed.\n" +
 				"-jar       <jar location>       - Full path to jar file containing heap dump logic.\n" +
-				"-memory    <memory threshold>   - Full path to jar file containing heap dump logic.\n" +
+				"-jmap      <jmap location>      - Full path to the jmap executable on the host where the code will be deployed.\n" +
 				"-slash     <file Separator>     - Either a backslash or a forward slash depending on the DEPLOYMENT platform.\n"
 				;
 
@@ -101,10 +101,10 @@ class BWInstrument {
 			jarLocation = _props.getProperty("jarFile");
 		}
 
-		if (!_props.containsKey("memoryThreshold")) {
-			throw(new UsageException("Required input parameter '-memory' has not been specified.", usageString));
+		if (!_props.containsKey("jmapLoc")) {
+			throw(new UsageException("Required input parameter '-jmap' has not been specified.", usageString));
 		} else {
-			memoryThreshold = _props.getProperty("memoryThreshold");
+			jmapLoc = _props.getProperty("jmapLoc");
 		}
 
 		if (!_props.containsKey("slashStyle")) {
@@ -338,10 +338,10 @@ class BWInstrument {
 				"            <MethodInfo>" +
 				"                <classLocation>" + jarLocation + "</classLocation>" +
 				"                <className>nochum.bw5.utilities.BWProfile</className>" +
-				"                <methodName>profileMemory</methodName>" +
+				"                <methodName>heapHisto</methodName>" +
 				"                <methodReturn>void</methodReturn>" +
 				"                <methodParameter>java.lang.String</methodParameter>" +
-				"                <methodParameter>java.lang.Long</methodParameter>" +
+				"                <methodParameter>java.lang.String</methodParameter>" +
 				"            </MethodInfo>" +
 				"        </config>" +
 				"        <pd:inputBindings>" +
@@ -352,7 +352,7 @@ class BWInstrument {
 				", tib:timestamp(), " + "\'-" + processName + "-" + activityName + "\')\"/>" +
 				"                    </Parameter1>" +
 				"                    <Parameter2>" +
-				"                        <xsl:value-of select=\"" + memoryThreshold + "\"/>" +
+				"                        <xsl:value-of select=\"\'" + jmapLoc + "\'\"/>" +
 				"                    </Parameter2>" +
 				"                </MethodParameters>" +
 				"            </jmai:JavaMethodActivityInput>" +
