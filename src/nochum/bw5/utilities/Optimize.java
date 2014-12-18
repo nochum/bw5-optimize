@@ -135,10 +135,10 @@ public class Optimize {
 					usage();
 				props.put("jarFile", args[i + 1]);
 				i += 2;
-			} else if (args[i].equals("-memory")) {
+			} else if (args[i].equals("-jmap")) {
 				if ((i + 1) >= args.length)
 					usage();
-				props.put("memoryThreshold", args[i + 1]);
+				props.put("jmapLoc", args[i + 1]);
 				i += 2;
 			} else if (args[i].equals("-slash")) {
 				if ((i + 1) >= args.length)
