@@ -104,13 +104,46 @@ the deeply nested reference is itself referenced.  This allows users to
 prioritize the effort of creating semantically meaningful shortcuts based
 on both depth and number of references.
 
+instrument
+----------
+Intruments a BACKUP COPY of an existing BW application with tooling that
+generates a heap dump after the Start activity and before theEnd activity
+of each process in the project.
+
+The resulting heap dumps can be subsequently analyzed with the Eclipse
+Memory Analyzer Tool (MAT) from the command line, to produce reports
+on memory utilization and class histograms.
+
+This allows memory growth to be analyzed within the context of BW processes
+such that it becomes easier to see which processes cause more memory to be
+consumed, and which classes are generated within the BW process that consume
+the memory.
+
+histoSummary
+------------
+After running the BusinessWorks project that was previously instrumented
+using the `nochum.bw5.utilities.Optimize instrument` option, a directory
+is populated with JVM heap histogram profile snapshots taken at the
+start and end of every BW process that was invoked.  The "instrument"
+tool places these snapshots in the location specified by the -output
+argument.
+
+This option reads all of the JVM heap histogram profile snapshots that the
+"instrument tool" created, and creates a summary report that shows the
+total number of live objects allocated and the total memory utilization
+by live objects on the JVM heap at the beginning and at the end of each
+BusinessWorks process invocation.  This allows the user to pinpoint
+exactly where memory spikes are taking place.
+
 Usage
 =====
 Usage: Optimize **COMMAND** where **COMMAND** is one of:
-  - **deadcode**   - Discover and report dead code within a BW project.
-  - **ifToCopyOf** - Modify generated value-of within if constructs for optional-to-optional mappings to straight copy-of.
-  - **namespaces** - Remove unused namespace declarations from processes.
-  - **xpathRef**   - Report on the number and depth of XPath references for each activity in each process.\n
+  - **deadcode**     - Discover and report dead code within a BW project.
+  - **ifToCopyOf**   - Modify generated value-of within if constructs for optional-to-optional mappings to straight copy-of.
+  - **namespaces**   - Remove unused namespace declarations from processes.
+  - **xpathRef**     - Report on the number and depth of XPath references for each activity in each process.
+  - **instrument**   - Instrument a BACKUP COPY of a BW project for memory profiling.
+  - **histoSummary** - Create a summary report of BW memory utilization by class within BW process.
 
 Most commands print help when invoked w/o parameters
 

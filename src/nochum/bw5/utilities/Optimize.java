@@ -35,16 +35,18 @@ public class Optimize {
 		
 		// perform the desired processing
 		try {
-			if (opType.equals("deadcode"))
+			if (opType.equalsIgnoreCase("deadcode"))
 				new BWDeadCode(props);
-			else if (opType.equals("ifToCopyOf"))
+			else if (opType.equalsIgnoreCase("ifToCopyOf"))
 				new BWIfToCopyOf(props);
-			else if (opType.equals("namespaces"))
+			else if (opType.equalsIgnoreCase("namespaces"))
 				new BWNamespace(props);
-			else if (opType.equals("xpathRef"))
+			else if (opType.equalsIgnoreCase("xpathRef"))
 				new BWXPathRef(props);
-			else if (opType.equals("instrument"))
+			else if (opType.equalsIgnoreCase("instrument"))
 				new BWInstrument(props);
+			else if (opType.equalsIgnoreCase("histoSummary"))
+				new HistoSummary(props);
 			else
 				usage();
 		} catch (UsageException ue) {
@@ -65,11 +67,12 @@ public class Optimize {
 	private void usage() {
 		final String usageString = "Usage: Optimize COMMAND\n" +
 				"       where COMMAND is one of:\n" +
-				"  deadcode   - Discover and report dead code within a BW project.\n" +
-				"  ifToCopyOf - Modify generated value-of within if constructs for optional-to-optional mappings to straight copy-of.\n" +
-				"  namespaces - Remove unused namespace declarations from processes.\n" +
-				"  xpathRef   - Report on the number and depth of XPath references for each activity in each process.\n" +
-				"  instrument - Instrument a BACKUP COPY of a BW project for memory profiling.\n\n" +
+				"  deadcode     - Discover and report dead code within a BW project.\n" +
+				"  ifToCopyOf   - Modify generated value-of within if constructs for optional-to-optional mappings to straight copy-of.\n" +
+				"  namespaces   - Remove unused namespace declarations from processes.\n" +
+				"  xpathRef     - Report on the number and depth of XPath references for each activity in each process.\n" +
+				"  instrument   - Instrument a BACKUP COPY of a BW project for memory profiling.\n" +
+				"  histoSummary - Create a summary report of BW memory utilization by class within BW process.\n\n" +
 				"Most commands print help when invoked w/o parameters.\n";
 				
         System.err.print(usageString);
@@ -144,6 +147,11 @@ public class Optimize {
 				if ((i + 1) >= args.length)
 					usage();
 				props.put("slashStyle", args[i + 1]);
+				i += 2;
+			} else if (args[i].equals("-profiles")) {
+				if ((i + 1) >= args.length)
+					usage();
+				props.put("profileLoc", args[i + 1]);
 				i += 2;
 			} else {
 				System.err.println("Unrecognized parameter: " + args[i]);
